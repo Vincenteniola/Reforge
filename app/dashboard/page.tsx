@@ -9,7 +9,7 @@ const stateColor: Record<string, string> = {
 };
 
 export default async function Dashboard() {
-  const { userId } = auth();
+  const { userId } = await auth();
 
   const { data: user } = await supabaseAdmin
     .from("users")
