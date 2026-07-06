@@ -1,4 +1,4 @@
-# Reforge — Starter Code
+# Reforge — Starter C ode
 
 This is a working skeleton, not a finished product. It has real login, a real
 database connection, and a real email-sending function — but the two hardest
