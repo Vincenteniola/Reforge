@@ -77,7 +77,6 @@ async function fetchMetaAdMetrics(account: {
   FacebookAdsApi.init(account.meta_access_token);
   const adAccount = new AdAccount(account.meta_account_id);
 
-  // Pull yesterday's performance for every currently active ad
   const insights = await adAccount.getInsights(
     ["ad_id", "ad_name", "frequency", "ctr", "cpm"],
     {
@@ -96,7 +95,6 @@ async function fetchMetaAdMetrics(account: {
     const ctr = parseFloat(row.ctr || "0");
     const cpm = parseFloat(row.cpm || "0");
 
-    // Find this same ad's reading from about a week ago to measure real change
     const sevenDaysAgo = new Date();
     sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 8);
 
@@ -113,10 +111,10 @@ async function fetchMetaAdMetrics(account: {
     let ctrSlope7d = 0;
     let cpmDrift7d = 0;
 
-    if (pastMetric?.ctr > 0) {
+    if (pastMetric && pastMetric.ctr > 0) {
       ctrSlope7d = ((ctr - pastMetric.ctr) / pastMetric.ctr) * 100;
     }
-    if (pastMetric?.cpm > 0) {
+    if (pastMetric && pastMetric.cpm > 0) {
       cpmDrift7d = ((cpm - pastMetric.cpm) / pastMetric.cpm) * 100;
     }
 
@@ -124,4 +122,4 @@ async function fetchMetaAdMetrics(account: {
   }
 
   return metrics;
-    }
+  }
